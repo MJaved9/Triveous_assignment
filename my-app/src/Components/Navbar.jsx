@@ -33,8 +33,8 @@ const Navbar = () => {
               </a>
             </li>
             <li>
-              <a href="#contact" onClick={closeMenu}>
-                Contact
+              <a href="favorites" onClick={closeMenu}>
+              Favorites
               </a>
             </li>
           </ul>

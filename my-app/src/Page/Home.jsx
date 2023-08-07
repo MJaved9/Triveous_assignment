@@ -36,7 +36,7 @@ const Home = () => {
   const fetchData = () => {
     axios
       .get(
-        "https://gnews.io/api/v4/search?q=example&apikey=7649cce50f41bf2f49be221e574950d7"
+        "https://gnews.io/api/v4/search?q=example&apikey=acbc622f49c0356561a87be0e22fa997"
       )
       .then((res) => {
         setData(res.data.articles);
@@ -45,7 +45,6 @@ const Home = () => {
         console.log(err);
       });
   };
-
   useEffect(() => {
     fetchData();
   }, []);
@@ -82,6 +81,7 @@ if(token){
           <NewsCard
             key={index}
             article={el}
+            index={index}
             addToFavorites={() => addToFavorites(el)}
             isFavorite={favorites.includes(el)}
           />
@@ -105,8 +105,15 @@ else{
 }
 };
 
-const NewsCard = ({ article }) => {
-  const { title, description, publishedAt, url, image } = article;
+const NewsCard = ({ article ,index}) => {
+  const fav=JSON.parse(localStorage.getItem("fav"))||[]
+  const {title, description, publishedAt, url, image} = article;
+  const handleClick=()=>{
+    fav.push(article)
+    localStorage.setItem("fav",JSON.stringify(fav))
+    console.log(fav)
+  }
+
 
   return (
     <Box
@@ -130,7 +137,8 @@ const NewsCard = ({ article }) => {
       <Button as="a" href={url} target="_blank" colorScheme="blue" size="sm" mt="4">
         Read More
       </Button>
-      <IconButton
+      <IconButton 
+      onClick={handleClick}
         aria-label="Add to Favorites"
         colorScheme="red"
         icon={<AiOutlineHeart />}
